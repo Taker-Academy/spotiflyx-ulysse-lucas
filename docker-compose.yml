@@ -6,8 +6,6 @@ services:
     restart: always
     ports:
       - "5432:5432"
-    volumes:
-      - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -15,17 +13,20 @@ services:
   server:
     build: server/
     container_name: server
-    restart: always
+    restart: on-failure
     ports:
       - "3000:3000"
     depends_on:
       - db
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      SPOTIFY_CLIENT_ID: ${SPOTIFY_CLIENT_ID}
+      SPOTIFY_CLIENT_SECRET: ${SPOTIFY_CLIENT_SECRET}
+      JWT_SECRET: ${JWT_SECRET}
   client:
     build: client/
     container_name: client
-    restart: always
+    restart: on-failure
     ports:
       - "8080:8080"
     depends_on:

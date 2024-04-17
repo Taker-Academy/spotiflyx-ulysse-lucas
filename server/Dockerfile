@@ -11,4 +11,4 @@ RUN go build .
 
 EXPOSE 8080
 
-CMD ["./server"]
+CMD ["./spotiflyx"]

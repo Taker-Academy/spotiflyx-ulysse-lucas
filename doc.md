@@ -13,10 +13,10 @@ Toutes les erreurs renverront un objet JSON avec un message d'erreur approprié 
 }
 ```
 
-## User
+## User et auth
 
 ### Inscription
-- **Endpoint** : `/api/user/signup`
+- **Endpoint** : `/api/auth/signup`
 - **Méthode** : POST
 - **Description** : Permet à un utilisateur de s'inscrire en fournissant une adresse e-mail et un mot de passe.
 - **Paramètres** :
@@ -36,7 +36,7 @@ Toutes les erreurs renverront un objet JSON avec un message d'erreur approprié 
   - 500 Internal Server Error: Erreur interne du serveur.
 
 ### Connexion
-- **Endpoint** : `/api/user/signin`
+- **Endpoint** : `/api/auth/signin`
 - **Méthode** : POST
 - **Description** : Permet à un utilisateur de se connecter en fournissant une adresse e-mail et un mot de passe.
 - **Paramètres** :
