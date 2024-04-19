@@ -5,7 +5,6 @@ import (
 	"spotiflyx/models"
 	"spotiflyx/jwt"
 	"gorm.io/gorm"
-	"fmt"
 )
 
 func AuthRoutes(app *fiber.App, db *gorm.DB) {
@@ -70,10 +69,10 @@ func Signin(auth fiber.Router, db *gorm.DB) {
 
 		// get user from the database
 		existingUser := models.User{}
-		db.First(&user, "email = ?", user.Email).Scan(&existingUser)
+		db.First(&models.User{}, "email = ?", user.Email).Scan(&existingUser)
 
 		// Check if the user exists and the password is correct
-		if existingUser.ID == 0 || CheckPasswordHash(user.Password, existingUser.Password) {
+		if existingUser.ID == 0 || !CheckPasswordHash(user.Password, existingUser.Password) {
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"ok": false,
 				"error": "email/password incorrect",
