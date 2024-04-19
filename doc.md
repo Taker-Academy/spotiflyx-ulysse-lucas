@@ -405,17 +405,17 @@ All errors will return a JSON object with an appropriate error message and a cor
         "type": "music",
         "title": "sunshine",
         "id": "cdejdnscksjdc"
-      },
-      {
-        "type": "music",
-        "title": "waterstyle",
-        "id": "cdejfugjjfddc"
-      },
-      {
-        "type": "music",
-        "title": "loving me",
-        "id": "cfyukolkjsjdc"
-      }
+        },
+        {
+          "type": "music",
+          "title": "waterstyle",
+          "id": "cdejfugjjfddc"
+        },
+        {
+          "type": "music",
+          "title": "loving me",
+          "id": "cfyukolkjsjdc"
+        }
       ],
       "video": [
         {

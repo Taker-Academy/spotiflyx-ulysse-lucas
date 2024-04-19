@@ -3,10 +3,12 @@ package jwt
 import (
 	"os"
 	"time"
+	"spotiflyx/models"
 
 	"github.com/gofiber/fiber/v2"
 	jwtware "github.com/gofiber/jwt/v3"
 	jtoken "github.com/golang-jwt/jwt/v4"
+	"gorm.io/gorm"
 )
 
 func GetSecret() string {
@@ -21,6 +23,24 @@ func GetClaims(tokenString string) (*jtoken.Token, error) {
 		return nil, err
 	}
 	return token, nil
+}
+
+func GetUserID(tokenString string, db *gorm.DB) (string, error) {
+	tokenString = tokenString[7:] // Remove the Bearer prefix
+	token, err := GetClaims(tokenString)
+	if err != nil {
+		return "", err
+	}
+	claims := token.Claims.(jtoken.MapClaims)
+
+	//check if userId exist in the db
+	objId, _ := claims["ID"].(string)
+	user := models.User{}
+	db.First(&user, "id = ?", objId)
+	if user.ID == 0 {
+		return "", err
+	}
+	return objId, nil
 }
 
 func GetToken(userID string) string {

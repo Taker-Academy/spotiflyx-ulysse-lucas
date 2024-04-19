@@ -5,6 +5,7 @@ import (
 	"spotiflyx/models"
 	"spotiflyx/jwt"
 	"gorm.io/gorm"
+	"fmt"
 )
 
 func AuthRoutes(app *fiber.App, db *gorm.DB) {
@@ -50,7 +51,7 @@ func Signup(auth fiber.Router, db *gorm.DB) {
 		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 			"ok": true,
 			"data": fiber.Map{
-				"token": jwt.GetToken(string(newUser.ID)),
+				"token": jwt.GetToken(fmt.Sprint(newUser.ID)),
 			},
 		})
 	})
@@ -82,7 +83,7 @@ func Signin(auth fiber.Router, db *gorm.DB) {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"ok": true,
 			"data": fiber.Map{
-				"token": jwt.GetToken(string(user.ID)),
+				"token": jwt.GetToken(fmt.Sprint(user.ID)),
 			},
 		})
 	})
