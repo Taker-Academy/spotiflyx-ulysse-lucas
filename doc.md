@@ -63,8 +63,8 @@ All errors will return a JSON object with an appropriate error message and a cor
 
 - **Header: Authorization (String, required):** JWT Token for authentication.
 - **Parameters** :
-  - oldPassword (string, required) : Old password.
-  - newPassword (string, required) : New password.
+  - OldPassword (string, required) : Old password.
+  - NewPassword (string, required) : New password.
 - **Responses** :
 ```json
 {
