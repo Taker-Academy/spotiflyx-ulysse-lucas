@@ -10,7 +10,7 @@ import (
 )
 
 func GetSecret() string {
-	return os.Getenv("SECRET_STR")
+	return os.Getenv("JWT_SECRET")
 }
 
 func GetClaims(tokenString string) (*jtoken.Token, error) {
@@ -44,6 +44,7 @@ func NewAuthMiddleware(secret string) fiber.Handler {
 		SigningKey: []byte(secret),
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"ok": false,
 				"error": "wrong token",
 			})
 		},
