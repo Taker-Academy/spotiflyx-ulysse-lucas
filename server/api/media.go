@@ -1,11 +1,11 @@
 package api
 
 import (
+	"fmt"
 	"spotiflyx/jwt"
 	"spotiflyx/models"
 	"strconv"
 	"strings"
-	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
@@ -16,10 +16,204 @@ func MediaRoutes(app *fiber.App, db *gorm.DB, authMiddleware func(*fiber.Ctx) er
 		return c.Next()
 	})
 	CreateMedia(media, db)
+	GetRecentMedia(media, db)
+	GetVideoInfo(media, db)
+	GetMusicInfo(media, db)
+}
+
+func GetMusicInfo(media fiber.Router, db *gorm.DB) {
+	media.Get("/music/:id", func(c *fiber.Ctx) error {
+		// Check if the user is authenticated
+		if user, _ := jwt.GetUserID(c.Get("Authorization"), db); user == "" {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"ok": false,
+				"error": "Unauthorized",
+			})
+		}
+		// Check if the id is valid
+		id := c.Params("id")
+		if _, err := strconv.Atoi(id); id == "" || err != nil{
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"ok": false,
+				"error": "Bad request",
+			})
+		}
+		// Check if the music exists
+		media := models.Media{}
+		tx := db.First(&media, "id = ?", id)
+		if tx.Error != nil || media.MediaType != "music" {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"ok": false,
+				"error": "Music not found",
+			})
+		}
+
+		// check if in the likes their is the user id
+		userid, _ := jwt.GetUserID(c.Get("Authorization"), db)
+		useridUint, _ := strconv.ParseUint(userid, 10, 32)
+		liked := false
+		for _, like := range media.Likes {
+			if like == uint(useridUint) {
+				liked = true
+				break
+			}
+		}
+
+		// check if in the favorites their is the user id
+		favorite := false
+		for _, fav := range media.Favorites {
+			if fav == uint(useridUint) {
+				favorite = true
+				break
+			}
+		}
+
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"ok": true,
+			"data": fiber.Map{
+				"mediaType": media.MediaType,
+				"title": media.Title,
+				"author": media.Author,
+				"imgUrl": media.ImgUrl,
+				"url": media.Url,
+				"likes": len(media.Likes),
+				"favorite": favorite,
+				"liked": liked,
+				"id": media.ID,
+			},
+		})
+	})
+}
+
+func GetVideoInfo(media fiber.Router, db *gorm.DB) {
+	media.Get("/video/:id", func(c *fiber.Ctx) error {
+		// Check if the user is authenticated
+		if user, _ := jwt.GetUserID(c.Get("Authorization"), db); user == "" {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"ok": false,
+				"error": "Unauthorized",
+			})
+		}
+		// Check if the id is valid
+		id := c.Params("id")
+		if _, err := strconv.Atoi(id); id == "" || err != nil{
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"ok": false,
+				"error": "Bad request",
+			})
+		}
+		// Check if the video exists
+		media := models.Media{}
+		tx := db.First(&media, "id = ?", id)
+		if tx.Error != nil || media.MediaType != "video" {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"ok": false,
+				"error": "Video not found",
+			})
+		}
+
+		// check if in the likes their is the user id
+		userid, _ := jwt.GetUserID(c.Get("Authorization"), db)
+		useridUint, _ := strconv.ParseUint(userid, 10, 32)
+		liked := false
+		for _, like := range media.Likes {
+			if like == uint(useridUint) {
+				liked = true
+				break
+			}
+		}
+
+		// check if in the favorites their is the user id
+		favorite := false
+		for _, fav := range media.Favorites {
+			if fav == uint(useridUint) {
+				favorite = true
+				break
+			}
+		}
+
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"ok": true,
+			"data": fiber.Map{
+				"mediaType": media.MediaType,
+				"title": media.Title,
+				"author": media.Author,
+				"imgUrl": media.ImgUrl,
+				"url": media.Url,
+				"likes": len(media.Likes),
+				"favorite": favorite,
+				"liked": liked,
+				"id": media.ID,
+			},
+		})
+	})
+}
+
+func GetRecentMedia(media fiber.Router, db *gorm.DB) {
+	media.Get("/latest", func(c *fiber.Ctx) error {
+		// Check if the user is authenticated
+		if user, _ := jwt.GetUserID(c.Get("Authorization"), db); user == "" {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"ok": false,
+				"error": "Unauthorized",
+			})
+		}
+		var mediaMusicLs []models.Media
+		var mediaVideoLs []models.Media
+		musicLs := []fiber.Map{}
+		videoLs := []fiber.Map{}
+
+		// get the 3 most recent music
+		tx := db.Where("media_type = ?", "music").Order("created_at desc").Limit(3).Find(&mediaMusicLs)
+		if tx.Error != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"ok": false,
+				"error": "Internal server error",
+			})
+		}
+		for _, media := range mediaMusicLs {
+			musicLs = append(musicLs, fiber.Map{
+				"mediaType": media.MediaType,
+				"title":     media.Title,
+				"id":        media.ID,
+			})
+		}
+
+		// get the 3 most recent video
+		tx = db.Where("media_type = ?", "video").Order("created_at desc").Limit(3).Find(&mediaVideoLs)
+		if tx.Error != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"ok": false,
+				"error": "Internal server error",
+			})
+		}
+		for _, media := range mediaVideoLs {
+			videoLs = append(videoLs, fiber.Map{
+				"mediaType": media.MediaType,
+				"title":     media.Title,
+				"id":        media.ID,
+			})
+		}
+
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"ok": true,
+			"data": fiber.Map{
+				"music": musicLs,
+				"video": videoLs,
+			},
+		})
+	})
 }
 
 func CreateMedia(media fiber.Router, db *gorm.DB) {
 	media.Post("/create", func(c *fiber.Ctx) error {
+		// Check if the user is authenticated
+		if user, _ := jwt.GetUserID(c.Get("Authorization"), db); user == "" {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"ok": false,
+				"error": "Unauthorized",
+			})
+		}
 		type body struct {
 			Title string `json:"title"`
 			MediaType string `json:"mediaType"`
@@ -106,7 +300,7 @@ func CreateMusic(title string, url string, db *gorm.DB, media *models.Media) err
 }
 
 func CreateVideo(title string, url string, db *gorm.DB, media *models.Media) error {
-	video, err := GetVideoInfo(url)
+	video, err := GetYoutubeVideoInfo(url)
 	if err != nil {
 		return err
 	}

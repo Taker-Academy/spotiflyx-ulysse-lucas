@@ -38,7 +38,7 @@ func parseVideoUrl(url string) string {
 	return videoID
 }
 
-func GetVideoInfo(url string) (*youtube.VideoListResponse, error) {
+func GetYoutubeVideoInfo(url string) (*youtube.VideoListResponse, error) {
 	client, err := GetYoutubeClient()
 	if err != nil {
 		fmt.Println("Error getting Youtube client:", err)

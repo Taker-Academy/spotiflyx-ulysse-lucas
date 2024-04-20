@@ -391,7 +391,7 @@ All errors will return a JSON object with an appropriate error message and a cor
   - 500 Internal Server Error: Internal server error.
 
 ## get recent media
-- **Endpoint** : `/api/media/new`
+- **Endpoint** : `/api/media/latest`
 - **Method** : GET
 - **Description** : get the 3 most recent media in each category (video and music).
 - **Header: Authorization (String, required):** JWT Token for authentication.
