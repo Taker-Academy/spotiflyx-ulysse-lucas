@@ -21,6 +21,23 @@ func MediaRoutes(app *fiber.App, db *gorm.DB, authMiddleware func(*fiber.Ctx) er
 	GetMusicInfo(media, db)
 }
 
+func GetMediaOutput(media models.Media, userID string, db *gorm.DB) fiber.Map {
+	likes, liked, _ := GetLikes(db, userID, strconv.Itoa(int(media.ID)))
+	_, favorite, _ := GetFavorites(db, userID, strconv.Itoa(int(media.ID)))
+
+	return fiber.Map{
+		"mediaType": media.MediaType,
+		"title": media.Title,
+		"author": media.Author,
+		"imgUrl": media.ImgUrl,
+		"url": media.Url,
+		"likes": len(likes),
+		"favorite": favorite,
+		"liked": liked,
+		"id": media.ID,
+	}
+}
+
 func GetMusicInfo(media fiber.Router, db *gorm.DB) {
 	media.Get("/music/:id", func(c *fiber.Ctx) error {
 		// Check if the user is authenticated
@@ -48,39 +65,10 @@ func GetMusicInfo(media fiber.Router, db *gorm.DB) {
 			})
 		}
 
-		// check if in the likes their is the user id
 		userid, _ := jwt.GetUserID(c.Get("Authorization"), db)
-		useridUint, _ := strconv.ParseUint(userid, 10, 32)
-		liked := false
-		for _, like := range media.Likes {
-			if like == uint(useridUint) {
-				liked = true
-				break
-			}
-		}
-
-		// check if in the favorites their is the user id
-		favorite := false
-		for _, fav := range media.Favorites {
-			if fav == uint(useridUint) {
-				favorite = true
-				break
-			}
-		}
-
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"ok": true,
-			"data": fiber.Map{
-				"mediaType": media.MediaType,
-				"title": media.Title,
-				"author": media.Author,
-				"imgUrl": media.ImgUrl,
-				"url": media.Url,
-				"likes": len(media.Likes),
-				"favorite": favorite,
-				"liked": liked,
-				"id": media.ID,
-			},
+			"data": GetMediaOutput(media, userid, db),
 		})
 	})
 }
@@ -112,39 +100,10 @@ func GetVideoInfo(media fiber.Router, db *gorm.DB) {
 			})
 		}
 
-		// check if in the likes their is the user id
 		userid, _ := jwt.GetUserID(c.Get("Authorization"), db)
-		useridUint, _ := strconv.ParseUint(userid, 10, 32)
-		liked := false
-		for _, like := range media.Likes {
-			if like == uint(useridUint) {
-				liked = true
-				break
-			}
-		}
-
-		// check if in the favorites their is the user id
-		favorite := false
-		for _, fav := range media.Favorites {
-			if fav == uint(useridUint) {
-				favorite = true
-				break
-			}
-		}
-
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"ok": true,
-			"data": fiber.Map{
-				"mediaType": media.MediaType,
-				"title": media.Title,
-				"author": media.Author,
-				"imgUrl": media.ImgUrl,
-				"url": media.Url,
-				"likes": len(media.Likes),
-				"favorite": favorite,
-				"liked": liked,
-				"id": media.ID,
-			},
+			"data": GetMediaOutput(media, userid, db),
 		})
 	})
 }
@@ -261,19 +220,10 @@ func CreateMedia(media fiber.Router, db *gorm.DB) {
 				"error": "Internal server error",
 			})
 		}
-		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		userid, _ := jwt.GetUserID(c.Get("Authorization"), db)
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"ok": true,
-			"data": fiber.Map{
-				"mediaType": media.MediaType,
-				"title": media.Title,
-				"author": media.Author,
-				"imgUrl": media.ImgUrl,
-				"url": media.Url,
-				"likes": 0,
-				"favorite": false,
-				"liked": false,
-				"id": media.ID,
-			},
+			"data": GetMediaOutput(media, userid, db),
 		})
 	})
 }

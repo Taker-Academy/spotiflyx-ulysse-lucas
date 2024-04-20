@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"spotiflyx/api"
@@ -25,10 +26,12 @@ func checkEnv() {
 	if _, _, err := api.GetSpotifyClient(); err != nil {
 		panic("Couldn't get spotify client")
 	}
+	fmt.Println("Spotify client connected")
 	_, err := api.GetYoutubeClient()
 	if err != nil {
 		panic("Couldn't get youtube client")
 	}
+	fmt.Println("Youtube client connected")
 }
 
 func main() {
@@ -47,12 +50,14 @@ func main() {
 	// Migrate the schema
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Media{})
+	db.AutoMigrate(&models.Interaction{})
 
 	// add endpoints
 	app.Use(cors.New())
 	api.AuthRoutes(app, db)
 	api.UserRoutes(app, db, authMiddleware)
 	api.MediaRoutes(app, db, authMiddleware)
+	api.InteractionsRoutes(app, db, authMiddleware)
 
 	app.Listen(":3000")
 }
