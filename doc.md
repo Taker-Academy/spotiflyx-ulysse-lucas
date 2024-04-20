@@ -127,12 +127,12 @@ All errors will return a JSON object with an appropriate error message and a cor
     "ok": true,
     "data": [
       {
-        "type": "music",
+        "mediaType": "music",
         "title": "sunshine",
         "id": "cdejdnscksjdc"
       },
       {
-        "type": "video",
+        "mediaType": "video",
         "title": "sunshine timelapse",
         "id": "assdwfvsrvdcf"
       }
@@ -158,7 +158,7 @@ All errors will return a JSON object with an appropriate error message and a cor
 {
     "ok": true,
     "data": {
-      "type": "music",
+      "mediaType": "music",
       "title": "sunshine",
       "author": "OneRepublic",
       "id": "cdejdnscksjdc",
@@ -189,7 +189,7 @@ All errors will return a JSON object with an appropriate error message and a cor
 {
     "ok": true,
     "data": {
-      "type": "video",
+      "mediaType": "video",
       "title": "sunshine timelapse",
       "author": "4K timelapse",
       "id": "assdwfvsrvdcf",
@@ -221,7 +221,7 @@ All errors will return a JSON object with an appropriate error message and a cor
 {
     "ok": true,
     "data": {
-      "type": "video",
+      "mediaType": "video",
       "title": "sunshine timelapse",
       "author": "4K timelapse",
       "id": "assdwfvsrvdcf",
@@ -251,7 +251,7 @@ All errors will return a JSON object with an appropriate error message and a cor
 {
     "ok": true,
     "data": {
-      "type": "video",
+      "mediaType": "video",
       "title": "sunshine timelapse",
       "author": "4K timelapse",
       "id": "assdwfvsrvdcf",
@@ -281,7 +281,7 @@ All errors will return a JSON object with an appropriate error message and a cor
 {
     "ok": true,
     "data": {
-      "type": "video",
+      "mediaType": "video",
       "title": "sunshine timelapse",
       "author": "4K timelapse",
       "id": "assdwfvsrvdcf",
@@ -311,7 +311,7 @@ All errors will return a JSON object with an appropriate error message and a cor
 {
     "ok": true,
     "data": {
-      "type": "video",
+      "mediaType": "video",
       "title": "sunshine timelapse",
       "author": "4K timelapse",
       "id": "assdwfvsrvdcf",
@@ -340,12 +340,12 @@ All errors will return a JSON object with an appropriate error message and a cor
     "ok": true,
     "data": [
       {
-        "type": "music",
+        "mediaType": "music",
         "title": "sunshine",
         "id": "cdejdnscksjdc"
       },
       {
-        "type": "video",
+        "mediaType": "video",
         "title": "sunshine timelapse",
         "id": "assdwfvsrvdcf"
       }
@@ -365,22 +365,22 @@ All errors will return a JSON object with an appropriate error message and a cor
 - **Header: Authorization (String, required):** JWT Token for authentication.
 - **Parameters** :
   - mediaType (string, [music, video], required) : type of media.
-  - title (string, required) : name of the media.
+  - title (string) : set custom name for the media.
   - url (string, required) : Link to retrieve the content from the corresponding API
 - **Responses** :
 ```json
 {
     "ok": true,
     "data": {
-      "type": "video",
+      "mediaType": "video",
       "title": "sunshine timelapse",
       "author": "4K timelapse",
       "id": "assdwfvsrvdcf",
-      "likes": 147,
+      "likes": 0,
       "favorite": false,
       "liked": false,
-      "uri": "https://www.youtube.com/embed/KiIXuKA9JQ0",
-      "img_url": "https://yt.com/img/ucfshcbshe"
+      "url": "https://www.youtube.com/embed/KiIXuKA9JQ0",
+      "imgUrl": "https://yt.com/img/ucfshcbshe"
     }
 }
 ```
@@ -402,34 +402,34 @@ All errors will return a JSON object with an appropriate error message and a cor
     "data": {
       "music": [
         {
-        "type": "music",
+        "mediaType": "music",
         "title": "sunshine",
         "id": "cdejdnscksjdc"
         },
         {
-          "type": "music",
+          "mediaType": "music",
           "title": "waterstyle",
           "id": "cdejfugjjfddc"
         },
         {
-          "type": "music",
+          "mediaType": "music",
           "title": "loving me",
           "id": "cfyukolkjsjdc"
         }
       ],
       "video": [
         {
-        "type": "video",
+        "mediaType": "video",
         "title": "sunshine timelapse",
         "id": "assdwfvsrvdcf"
         },
         {
-        "type": "video",
+        "mediaType": "video",
         "title": "new fortnite battle pass !!!",
         "id": "zeffefvsrvdck"
         },
         {
-        "type": "video",
+        "mediaType": "video",
         "title": "The history of Mr Beast",
         "id": "ascvbbcsrvdcj"
         }
