@@ -5,6 +5,7 @@ import (
 	"spotiflyx/models"
 	"strconv"
 	"strings"
+	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
@@ -105,5 +106,18 @@ func CreateMusic(title string, url string, db *gorm.DB, media *models.Media) err
 }
 
 func CreateVideo(title string, url string, db *gorm.DB, media *models.Media) error {
+	video, err := GetVideoInfo(url)
+	if err != nil {
+		return err
+	}
+	if (title == "") {
+		media.Title = video.Items[0].Snippet.Title
+	} else {
+		media.Title = title
+	}
+	media.MediaType = "video"
+	media.ImgUrl = video.Items[0].Snippet.Thumbnails.Standard.Url
+	media.Author = video.Items[0].Snippet.ChannelTitle
+	media.Url = fmt.Sprintf("https://www.youtube.com/embed/%s", parseVideoUrl(url))
 	return nil;
 }

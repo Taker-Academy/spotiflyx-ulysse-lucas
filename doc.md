@@ -384,7 +384,7 @@ All errors will return a JSON object with an appropriate error message and a cor
     }
 }
 ```
-  - 200 OK : Addition successful.
+  - 201 OK : media created.
   - 400 Bad Request : Incorrect parameters or missing parameter.
   - 401 Unauthorized : Incorrect JWT token.
   - 422 Unprocessable Entity: Invalid url.

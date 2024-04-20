@@ -19,8 +19,15 @@ func checkEnv() {
 	if os.Getenv("SPOTIFY_CLIENT_ID") == "" || os.Getenv("SPOTIFY_CLIENT_SECRET") == "" {
 		panic("SPOTIFY_CLIENT_ID or SPOTIFY_CLIENT_SECRET is not set")
 	}
+	if os.Getenv("YOUTUBE_API_KEY") == "" {
+		panic("YOUTUBE_API_KEY is not set")
+	}
 	if _, _, err := api.GetSpotifyClient(); err != nil {
 		panic("Couldn't get spotify client")
+	}
+	_, err := api.GetYoutubeClient()
+	if err != nil {
+		panic("Couldn't get youtube client")
 	}
 }
 
