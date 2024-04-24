@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #4B0082; 
+    color: #fff; 
+}
+
+.header {
+    background-color: #000000;
+    padding: 20px;
+    text-align: center;
+}
+
+.brand {
+    display: inline-block;
+}
+
+.brand img {
+    width: 50px; 
+    height: auto;
+    vertical-align: middle;
+}
+
+.brand h1 {
+    display: inline-block;
+    margin: 0;
+    margin-left: 10px; 
+    font-size: 24px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 30px auto;
+    background-color: #3f3f3f;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+
+.form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ccc; 
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #666; 
+    border-radius: 3px;
+    font-size: 16px;
+    color: #333; 
+    background-color: #eee; 
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #460491;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
