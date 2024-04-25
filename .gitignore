@@ -132,6 +132,8 @@ dist
 # postgres session temporary files
 postgres.session.sql
 
-# vscode settings
+# ide settings
 .vscode/*
 .idea/*
+*/.vscode/*
+*/.idea/*
