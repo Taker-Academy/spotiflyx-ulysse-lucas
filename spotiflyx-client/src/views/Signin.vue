@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="form">
-            <h1 class="title" style="font-weight: bold;">Sign Up:</h1>
+            <h1 class="title" style="font-weight: bold;">Sign In:</h1>
             <h3>Email address</h3>
             <InputGroup class="email">
                 <InputGroupAddon>
@@ -9,17 +9,17 @@
                 </InputGroupAddon>
                 <InputText class="input" v-model="email" placeholder="Enter email" />
             </InputGroup>
-            <h3>Set Password</h3>
+            <h3>Your Password</h3>
             <InputGroup class="password">
                 <InputGroupAddon>
                     <i class="pi pi-lock"></i>
                 </InputGroupAddon>
                 <Password class="input" v-model="password" placeholder="Enter password" toggleMask/>
             </InputGroup>
-            <Button class="btn" @click="signUpFunc">Sign Up</Button>
+            <Button class="btn" @click="signInFunc">Sign In</Button>
             <div class="signin">
-                <p>Already have an account?</p>
-                <router-link to="/signin">Sign In</router-link>
+                <p>Doesn't have an account?</p>
+                <router-link to="/signup">Sign Up</router-link>
             </div>
         </div>
     </main>
@@ -33,7 +33,7 @@ const email = ref('');
 const password = ref('');
 const router = useRouter(); // Create a router instance
 
-const signUpFunc = () => {
+const signInFunc = () => {
     console.log(email.value, password.value);
     // Here you can add logic to handle signup, e.g., send data to backend
 
