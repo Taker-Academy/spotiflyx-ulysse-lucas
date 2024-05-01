@@ -10,14 +10,16 @@ import InpuGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
+import routers from './router/router'
 
-const app = createApp(App)
+const appli = createApp(App)
 
-app.use(PrimeVue)
-app.component('InputText', InputText)
-app.component('Password', Password)
-app.component('InputGroup', InpuGroup)
-app.component('Button', Button)
-app.component('InputGroupAddon', InputGroupAddon)
-app.mount('#app')
+appli.use(PrimeVue)
+appli.use(routers)
+appli.component('InputText', InputText)
+appli.component('Password', Password)
+appli.component('InputGroup', InpuGroup)
+appli.component('Button', Button)
+appli.component('InputGroupAddon', InputGroupAddon)
+appli.mount('#app')
 

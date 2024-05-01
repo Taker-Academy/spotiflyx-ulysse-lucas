@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import {ref} from 'vue';
-
-const email = ref('');
-const password = ref('');
-
-const signUp = () => {
-    console.log(email.value, password.value);
-}
-</script>
-
 <template>
     <main>
         <div class="form">
@@ -27,14 +16,31 @@ const signUp = () => {
                 </InputGroupAddon>
                 <Password class="input" v-model="password" placeholder="Enter password" toggleMask/>
             </InputGroup>
-            <Button class="btn" @click="signUp()">Sign Up</Button>
+            <Button class="btn" @click="signUpFunc">Sign Up</Button>
             <div class="signin">
                 <p>Already have an account?</p>
-                <a href="/signin">Sign In</a>
+                <router-link to="/signin">Sign In</router-link>
             </div>
         </div>
     </main>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router'; // Import useRouter for programmatic navigation
+
+const email = ref('');
+const password = ref('');
+const router = useRouter(); // Create a router instance
+
+const signUpFunc = () => {
+    console.log(email.value, password.value);
+    // Here you can add logic to handle signup, e.g., send data to backend
+
+    // After successful signup, navigate to another route
+    router.push('/');
+}
+</script>
 
 <style scoped>
 main {
