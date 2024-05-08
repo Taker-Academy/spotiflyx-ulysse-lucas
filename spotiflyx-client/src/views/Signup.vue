@@ -50,6 +50,7 @@ const signUpFunc = () => {
         localStorage.setItem('token', res.data.data.token);
         ax.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
         console.log("Signed up")
+        localStorage.setItem('connected', 'true');
         if (redirect && redirect != '/signin' && redirect != '/signup')
             router.push(redirect);
         else

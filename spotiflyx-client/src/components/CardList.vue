@@ -4,11 +4,10 @@
         <template #default>
             <div class="cardList">
                 <template v-if="cards.length > 0">
-                    <RouterLink :to="'/media/' + card.id" class="card" v-for="card in cards" :key="card.id">
+                    <RouterLink :to="'/media/' + card.mediaType + '/' + card.id" class="card" v-for="card in cards" :key="card.id">
                         <div class="img" :style="{ backgroundImage: `url(${card.imgUrl})`}" alt="media" />
                         <div class="cardInfo">
                             <h3>{{ card.title }}</h3>
-                            <p>{{ card.type }}</p>
                         </div>
                     </RouterLink>
                 </template>
@@ -25,19 +24,10 @@
     </Suspense>
 </template>
 
-<script>
-import { Suspense } from 'vue';
-
-export default {
-    components: {
-        Suspense
-    }
-}
-</script>
-
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps } from 'vue';
 import { ax } from '../router/router';
+import { RouterLink } from 'vue-router'; // Add missing import statement
 
 ax.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
 
@@ -111,6 +101,8 @@ onMounted(async () => {
 
 .cardInfo {
     padding: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
 .img {

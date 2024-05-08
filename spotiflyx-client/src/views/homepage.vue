@@ -2,18 +2,23 @@
 import SearchBar from '../components/SearchBar.vue'
 import NavBar from '../components/NavBar.vue'
 import CardList from '../components/CardList.vue'
+import Popup from '../components/popup.vue'
+import Footer from '../components/Footer.vue'
 
 export default {
     components: {
         SearchBar,
         NavBar,
-        CardList
+        CardList,
+        Popup,
+        Footer
     },
     name: 'Home'
 }
 </script>
 
 <template>
+    <Popup />
     <navBar />
     <main>
         <div class="splitter">
@@ -25,6 +30,7 @@ export default {
             </div>
         </div>
     </main>
+    <Footer />
 </template>
 
 <script setup>
@@ -38,7 +44,8 @@ const video = ref('video');
 main {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 95vh;
+    min-height: min-content;
     width: 100%;
     background-color: var(--color-background-soft);
 }

@@ -4,9 +4,9 @@
             <RouterLink to="/home"><img src="/logo_trans.png" alt="logo"></RouterLink>
         </a>
         <div class="btns">
-            <RouterLink to="/home"><button>Home</button></RouterLink>
-            <RouterLink to="/favorites"><button>Favoris</button></RouterLink>
-            <RouterLink to="/account"><button>Mon compte</button></RouterLink>
+            <RouterLink to="/create"><i v-tooltip.bottom="'Créer un média'" class="pi pi-plus-circle" style="color: white; font-size: 1.6rem"></i></RouterLink>
+            <RouterLink to="/favorites"><i v-tooltip.bottom="'Mes favoris'" class="pi pi-heart" style="color: white; font-size: 1.6rem"></i></RouterLink>
+            <RouterLink to="/account"><i v-tooltip.bottom="'Mon compte'" class="pi pi-user" style="color: white; font-size: 1.6rem"></i></RouterLink>
         </div>
     </nav>
     <div class="shadow"></div>

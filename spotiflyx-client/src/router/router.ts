@@ -12,7 +12,7 @@ const routes = [
     { path: '/signup', name: 'Signup', component: Signup },
     { path: '/signin', name: 'Signin', component: Signin },
     { path: '/', redirect: '/home' },
-    { path: '/media/:id', name: 'Media', component: MediaPage }
+    { path: '/media/:type/:id', name: 'Media', component: MediaPage }
 ]
 
 const x = axios.create({

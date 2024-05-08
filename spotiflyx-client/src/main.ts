@@ -14,13 +14,20 @@ import ProgressSpinner from 'primevue/progressspinner';
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import Dialog from 'primevue/dialog';
+import ToastService from 'primevue/toastservice';
+import Toast from 'primevue/toast';
+import Tooltip from 'primevue/tooltip';
+
 import routers from './router/router'
 
 const appli = createApp(App)
 
 appli.use(PrimeVue)
 appli.use(routers)
+appli.use(ToastService)
+appli.directive('tooltip', Tooltip);
 appli.component('Dialog', Dialog)
+appli.component('Toast', Toast)
 appli.component('Splitter', Splitter)
 appli.component('SplitterPanel', SplitterPanel)
 appli.component('ProgressSpinner', ProgressSpinner)
