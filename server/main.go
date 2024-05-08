@@ -54,7 +54,7 @@ func main() {
 
 	// add endpoints
 	app.Use(cors.New())
-	api.AuthRoutes(app, db)
+	api.AuthRoutes(app, db, authMiddleware)
 	api.UserRoutes(app, db, authMiddleware)
 	api.MediaRoutes(app, db, authMiddleware)
 	api.InteractionsRoutes(app, db, authMiddleware)

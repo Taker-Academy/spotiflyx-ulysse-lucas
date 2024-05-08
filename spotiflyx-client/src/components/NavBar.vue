@@ -1,24 +1,31 @@
 <template>
     <nav>
         <a class="logo">
-            <RouterLink to="/"><img src="/logo_trans.png" alt="logo"></RouterLink>
+            <RouterLink to="/home"><img src="/logo_trans.png" alt="logo"></RouterLink>
         </a>
         <div class="btns">
-            <button>Home</button>
-            <button>Favorites</button>
-            <button>Account</button>
+            <RouterLink to="/home"><button>Home</button></RouterLink>
+            <RouterLink to="/favorites"><button>Favoris</button></RouterLink>
+            <RouterLink to="/account"><button>Mon compte</button></RouterLink>
         </div>
     </nav>
+    <div class="shadow"></div>
 </template>
 
 <style scoped>
 nav {
     width: 100%;
     height: 8vh;
-    background-color: var(--vt-c-indigo);
+    background-color: transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.shadow {
+    width: 100%;
+    height: 0px;
+    box-shadow: 0px -2px 20px 6px var(--primary-color);
 }
 
 .logo {

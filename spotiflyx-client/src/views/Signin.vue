@@ -1,25 +1,26 @@
 <template>
     <main>
         <div class="form">
-            <h1 class="title" style="font-weight: bold;">Sign In:</h1>
-            <h3>Email address</h3>
+            <h1 class="title" style="font-weight: bold;">Se connecter:</h1>
+            <h3>Adresse Email</h3>
             <InputGroup class="email">
                 <InputGroupAddon>
                     <i class="pi pi-envelope"></i>
                 </InputGroupAddon>
-                <InputText class="input" v-model="email" placeholder="Enter email" />
+                <InputText class="input" v-model="email" placeholder="Email" />
             </InputGroup>
-            <h3>Your Password</h3>
+            <h3>Ton mot de passe</h3>
             <InputGroup class="password">
                 <InputGroupAddon>
                     <i class="pi pi-lock"></i>
                 </InputGroupAddon>
-                <Password class="input" v-model="password" placeholder="Enter password" toggleMask/>
+                <Password class="input" v-model="password" placeholder="Mot de passe" :feedback="false" toggleMask/>
             </InputGroup>
-            <Button class="btn" @click="signInFunc">Sign In</Button>
+            <Button class="btn" label="Se connecter" @click="signInFunc" :loading="visible"></Button>
+            <div class="error"><h3 class="errorTxt"></h3></div>
             <div class="signin">
-                <p>Doesn't have an account?</p>
-                <router-link to="/signup">Sign Up</router-link>
+                <p>Pas de compte ?</p>
+                <router-link :to="{ path: '/signup', query: { redirect: redirect } }">créer un compte</router-link>
             </div>
         </div>
     </main>
@@ -27,22 +28,46 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'; // Import useRouter for programmatic navigation
+import { useRouter, useRoute } from 'vue-router';
+import { ax } from '../router/router'
+import Button from 'primevue/button';
+
+const route = useRoute();
+const redirect = route.query.redirect;
 
 const email = ref('');
 const password = ref('');
-const router = useRouter(); // Create a router instance
+const router = useRouter();
+const visible = ref(false);
 
-const signInFunc = () => {
-    console.log(email.value, password.value);
-    // Here you can add logic to handle signup, e.g., send data to backend
-
-    // After successful signup, navigate to another route
-    router.push('/');
+const signInFunc = async () => {
+    visible.value = true;
+    await ax.post('/auth/signin', {
+        email: email.value,
+        password: password.value
+    }).then((res: any) => {
+        localStorage.removeItem('token');
+        localStorage.setItem('token', res.data.data.token);
+        ax.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+        console.log("Logged in", res.data)
+        if (redirect && redirect != '/signin' && redirect != '/signup')
+            router.push(redirect);
+        else
+            router.push('/home');
+    }).catch((err: any) => {
+        console.log(err);
+        visible.value = false;
+        const errorTxt = document.querySelector('.errorTxt');
+        if (errorTxt) {
+            errorTxt.textContent = 'Invalide email ou mot de passe';
+        }
+        password.value = '';
+    });
 }
 </script>
 
 <style scoped>
+
 main {
     display: flex;
     align-items: center;
@@ -92,6 +117,20 @@ main {
 .password {
     width: 400px;
     margin-bottom: 3rem;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.8rem;
+    width: 400px;
+}
+
+.errorTxt {
+    color: rgb(155, 0, 0);
+    font-weight: bolder;
+    text-align: center;
 }
 
 .btn {

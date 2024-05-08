@@ -15,6 +15,20 @@ All errors will return a JSON object with an appropriate error message and a cor
 
 ## User and Auth
 
+### Authenticated
+- **Endpoint** : `/api/auth/authenticated`
+- **Method** : POST
+- **Description** : check if user is authenticated.
+- **Parameters** : null
+- **Responses** :
+```json
+{
+    "ok": true,
+}
+```
+  - 200 OK : Successful registration.
+  - 401 Unauthorized : wrong token
+
 ### Registration
 - **Endpoint** : `/api/auth/signup`
 - **Method** : POST
@@ -404,16 +418,19 @@ All errors will return a JSON object with an appropriate error message and a cor
         {
         "mediaType": "music",
         "title": "sunshine",
+        "imgUrl": "https://img.com",
         "id": "cdejdnscksjdc"
         },
         {
           "mediaType": "music",
           "title": "waterstyle",
+        "imgUrl": "https://img.com",
           "id": "cdejfugjjfddc"
         },
         {
           "mediaType": "music",
           "title": "loving me",
+        "imgUrl": "https://img.com",
           "id": "cfyukolkjsjdc"
         }
       ],
@@ -421,16 +438,19 @@ All errors will return a JSON object with an appropriate error message and a cor
         {
         "mediaType": "video",
         "title": "sunshine timelapse",
+        "imgUrl": "https://img.com",
         "id": "assdwfvsrvdcf"
         },
         {
         "mediaType": "video",
         "title": "new fortnite battle pass !!!",
+        "imgUrl": "https://img.com",
         "id": "zeffefvsrvdck"
         },
         {
         "mediaType": "video",
         "title": "The history of Mr Beast",
+        "imgUrl": "https://img.com",
         "id": "ascvbbcsrvdcj"
         }
       ]

@@ -1,25 +1,26 @@
 <template>
     <main>
         <div class="form">
-            <h1 class="title" style="font-weight: bold;">Sign Up:</h1>
-            <h3>Email address</h3>
+            <h1 class="title" style="font-weight: bold;">Nouveau compte:</h1>
+            <h3>Adresse Email</h3>
             <InputGroup class="email">
                 <InputGroupAddon>
                     <i class="pi pi-envelope"></i>
                 </InputGroupAddon>
-                <InputText class="input" v-model="email" placeholder="Enter email" />
+                <InputText class="input" v-model="email" placeholder="Email" />
             </InputGroup>
-            <h3>Set Password</h3>
+            <h3>Mot de passe</h3>
             <InputGroup class="password">
                 <InputGroupAddon>
                     <i class="pi pi-lock"></i>
                 </InputGroupAddon>
-                <Password class="input" v-model="password" placeholder="Enter password" toggleMask/>
+                <Password class="input" v-model="password" placeholder="Mot de passe" promptLabel="Choisie un mot de passe" weakLabel="Trop simple" mediumLabel="Normal" strongLabel="Complexe" toggleMask/>
             </InputGroup>
-            <Button class="btn" @click="signUpFunc">Sign Up</Button>
+            <Button class="btn" label="Nouveau compte" @click="signUpFunc" :loading="visible"></Button>
+            <div class="error"><h3 class="errorTxt"></h3></div>
             <div class="signin">
-                <p>Already have an account?</p>
-                <router-link to="/signin">Sign In</router-link>
+                <p>Déja un compte ?</p>
+                <router-link :to="{ path: '/signin', query: { redirect: redirect } }">Se connecter</router-link>
             </div>
         </div>
     </main>
@@ -27,18 +28,41 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useRouter } from 'vue-router'; // Import useRouter for programmatic navigation
+import { useRouter, useRoute } from 'vue-router';
+import { ax } from '../router/router'
+
+const route = useRoute();
+const redirect = route.query.redirect;
 
 const email = ref('');
 const password = ref('');
-const router = useRouter(); // Create a router instance
+const router = useRouter();
+const visible = ref(false);
 
 const signUpFunc = () => {
-    console.log(email.value, password.value);
-    // Here you can add logic to handle signup, e.g., send data to backend
-
-    // After successful signup, navigate to another route
-    router.push('/');
+    visible.value = true;
+    ax.post('/auth/signup', {
+        email: email.value,
+        password: password.value
+    }).then(async (res: any) => {
+        // delete token from local storage
+        localStorage.removeItem('token');
+        localStorage.setItem('token', res.data.data.token);
+        ax.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.data.token;
+        console.log("Signed up")
+        if (redirect && redirect != '/signin' && redirect != '/signup')
+            router.push(redirect);
+        else
+            router.push('/home');
+    }).catch((err: any) => {
+        console.log(err);
+        visible.value = false;
+        const errorTxt = document.querySelector('.errorTxt');
+        if (errorTxt) {
+            errorTxt.textContent = 'Invalide email ou mot de passe';
+        }
+        password.value = '';
+    });
 }
 </script>
 
@@ -92,6 +116,20 @@ main {
 .password {
     width: 400px;
     margin-bottom: 3rem;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.8rem;
+    width: 400px;
+}
+
+.errorTxt {
+    color: rgb(155, 0, 0);
+    font-weight: bolder;
+    text-align: center;
 }
 
 .btn {

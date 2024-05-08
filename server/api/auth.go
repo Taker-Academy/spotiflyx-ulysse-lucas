@@ -8,12 +8,21 @@ import (
 	"fmt"
 )
 
-func AuthRoutes(app *fiber.App, db *gorm.DB) {
+func AuthRoutes(app *fiber.App, db *gorm.DB, authMiddleware func(*fiber.Ctx) error) {
 	auth := app.Group("/api/auth", func(c *fiber.Ctx) error {
 		return c.Next()
 	})
 	Signin(auth, db)
 	Signup(auth, db)
+	Authenticated(auth, db, authMiddleware)
+}
+
+func Authenticated(auth fiber.Router, db *gorm.DB, authMiddleware func(*fiber.Ctx) error) {
+	auth.Get("/authenticated", authMiddleware, func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"ok": true,
+		})
+	})
 }
 
 func Signup(auth fiber.Router, db *gorm.DB) {
@@ -83,7 +92,7 @@ func Signin(auth fiber.Router, db *gorm.DB) {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"ok": true,
 			"data": fiber.Map{
-				"token": jwt.GetToken(fmt.Sprint(user.ID)),
+				"token": jwt.GetToken(fmt.Sprint(existingUser.ID)),
 			},
 		})
 	})

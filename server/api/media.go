@@ -134,6 +134,7 @@ func GetRecentMedia(media fiber.Router, db *gorm.DB) {
 			musicLs = append(musicLs, fiber.Map{
 				"mediaType": media.MediaType,
 				"title":     media.Title,
+				"imgUrl":    media.ImgUrl,
 				"id":        media.ID,
 			})
 		}
@@ -150,6 +151,7 @@ func GetRecentMedia(media fiber.Router, db *gorm.DB) {
 			videoLs = append(videoLs, fiber.Map{
 				"mediaType": media.MediaType,
 				"title":     media.Title,
+				"imgUrl":    media.ImgUrl,
 				"id":        media.ID,
 			})
 		}
