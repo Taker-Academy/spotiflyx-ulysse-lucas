@@ -130,7 +130,7 @@ All errors will return a JSON object with an appropriate error message and a cor
 
 ### Video or Music Search
 - **Endpoint** : `/api/media/search`
-- **Method** : POST
+- **Method** : GET
 - **Description** : Allows retrieval of a list of videos or music with a specific title.
 - **Header: Authorization (String, required):** JWT Token for authentication.
 - **Parameters** :

@@ -6,6 +6,8 @@ import Signin from '../views/Signin.vue';
 import ErrorPage from '../views/ErrorPage.vue';
 import MediaPage from '../views/MediaPage.vue';
 import Account from '../views/Account.vue';
+import CreatePage from '../views/CreatePage.vue';
+import FavoritesPage from '../views/FavoritesPage.vue';
 
 const routes = [
     { path: '/:pathMatch(.*)*', name: 'not-found', component: ErrorPage },
@@ -13,6 +15,8 @@ const routes = [
     { path: '/signup', name: 'Signup', component: Signup },
     { path: '/signin', name: 'Signin', component: Signin },
     { path: '/account', name: 'Account', component: Account},
+    { path: '/create', name: 'Create', component: CreatePage },
+    { path: '/favorites', name: 'Favorites', component: FavoritesPage},
     { path: '/', redirect: '/home' },
     { path: '/media/:type/:id', name: 'Media', component: MediaPage }
 ]

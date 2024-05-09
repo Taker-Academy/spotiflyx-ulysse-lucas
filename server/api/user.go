@@ -33,7 +33,10 @@ func DeleteUser(user fiber.Router, db *gorm.DB) {
 		// delete the user
 		db.Delete(&user)
 
-		// TODO: delete all the user's playlists and songs
+		// delete all the user's playlists and songs and interactions
+		db.Where("creator_id = ?", id).Delete(&models.Media{})
+		db.Where("user_id = ?", id).Delete(&models.Interaction{})
+		db.Where("id = ?", id).Delete(&models.User{})
 
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"ok": true,

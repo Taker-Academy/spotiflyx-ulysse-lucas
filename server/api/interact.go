@@ -50,6 +50,7 @@ func GetMyFavorites(interactions fiber.Router, db *gorm.DB) {
 				"mediaType": m.MediaType,
 				"title": m.Title,
 				"id": m.ID,
+				"imgUrl": m.ImgUrl,
 			})
 		}
 

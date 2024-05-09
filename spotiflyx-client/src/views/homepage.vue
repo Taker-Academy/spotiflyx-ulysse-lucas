@@ -21,6 +21,9 @@ export default {
     <Popup />
     <navBar />
     <main>
+        <div class="search">
+            <SearchBar />
+        </div>
         <div class="splitter">
             <div class="leftPanel">
                 <CardList :type="video" />
@@ -51,10 +54,23 @@ main {
     background-color: var(--color-background-soft);
 }
 
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: min-content;
+    padding: 1.5rem 4rem;
+    transition-duration: .5s;
+    animation-duration: .5s;
+}
+
 .splitter {
     display: flex;
     height: min-content;
     width: 100%;
+    border-top: 1px solid var(--primary-color);
+    margin-top: 2rem;
 }
 
 .leftPanel {

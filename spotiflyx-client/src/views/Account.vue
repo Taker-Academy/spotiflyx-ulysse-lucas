@@ -34,7 +34,7 @@ export default {
                         <Password class="pwdInput" v-model="newpwd" :feedback="false" placeholder="Nouveau mot de passe" style="width: 100%;" toggleMask/>
                     </div>
                     <div class="save">
-                        <Button @click="savePwd()" :loading="visible">Sauvegarder</Button>
+                        <Button @click="savePwd()">Sauvegarder</Button>
                         <p class="errorMsg"></p>
                     </div>
                 </Fieldset>

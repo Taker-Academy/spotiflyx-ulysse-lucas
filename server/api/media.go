@@ -19,7 +19,56 @@ func MediaRoutes(app *fiber.App, db *gorm.DB, authMiddleware func(*fiber.Ctx) er
 	GetRecentMedia(media, db)
 	GetVideoInfo(media, db)
 	GetMusicInfo(media, db)
+	GetSearchedMedia(media, db)
 }
+
+func GetSearchedMedia(media fiber.Router, db *gorm.DB) {
+	media.Post("/search", func(c *fiber.Ctx) error {
+		// Check if the user is authenticated
+		if user, _ := jwt.GetUserID(c.Get("Authorization"), db); user == "" {
+			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
+				"ok": false,
+				"error": "Unauthorized",
+			})
+		}
+		type body struct {
+			gorm.Model
+			Search string `json:"search"`
+		}
+		params := body{}
+		if err := c.BodyParser(&params); err != nil || params.Search == "" {
+			fmt.Println(err)
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"ok": false,
+				"error": "Bad request",
+			})
+		}
+
+		// Get the media
+		var mediaLs []models.Media
+		Ls := []fiber.Map{}
+		tx := db.Where("title LIKE ?", "%"+params.Search+"%")
+		tx.Find(&mediaLs)
+		if tx.Error != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"ok": false,
+				"error": "Internal server error",
+			})
+		}
+		for _, media := range mediaLs {
+			Ls = append(Ls, fiber.Map{
+				"mediaType": media.MediaType,
+				"title": media.Title,
+				"id": media.ID,
+			})
+		}
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"ok": true,
+			"data": Ls,
+		})
+	})
+}
+
 
 func GetMediaOutput(media models.Media, userID string, db *gorm.DB) fiber.Map {
 	likes, liked, _ := GetLikes(db, userID, strconv.Itoa(int(media.ID)))

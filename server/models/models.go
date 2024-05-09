@@ -13,14 +13,13 @@ type User struct {
 
 type Media struct {
 	gorm.Model
-	ID       uint   `json:"id" gorm:"primaryKey"`
-	MediaType string `json:"mediaType"`
-	Title    string `json:"title"`
-	Author    string `json:"author"`
-	Url      string `json:"url"`
-	ImgUrl   string `json:"imgUrl"`
-	CreatorID uint `json:"creatorID"`
-	CreatedAt string `json:"created_at"`
+	ID         uint   `json:"id" gorm:"primaryKey"`
+	MediaType  string `json:"mediaType"`
+	Title      string `json:"title"`
+	Author     string `json:"author"`
+	Url        string `json:"url"`
+	ImgUrl     string `json:"imgUrl"`
+	CreatorID  uint   `json:"creatorID"`
 }
 
 type Interaction struct {

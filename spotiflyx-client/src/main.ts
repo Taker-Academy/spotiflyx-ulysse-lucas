@@ -20,7 +20,11 @@ import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
 import Fieldset from 'primevue/fieldset';
 import ConfirmDialog from 'primevue/confirmdialog';
+import Panel from 'primevue/panel';
+import RadioButton from 'primevue/radiobutton';
 import ConfirmationService from 'primevue/confirmationservice';
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
 import Tooltip from 'primevue/tooltip';
 
 import routers from './router/router'
@@ -33,6 +37,10 @@ appli.use(ToastService)
 appli.use(ConfirmationService)
 appli.directive('tooltip', Tooltip);
 appli.component('IconField', IconField)
+appli.component('RadioButton', RadioButton)
+appli.component('TabView', TabView)
+appli.component('TabPanel', TabPanel)
+appli.component('Panel', Panel)
 appli.component('ConfirmDialog', ConfirmDialog)
 appli.component('Fieldset', Fieldset)
 appli.component('InputIcon', InputIcon)

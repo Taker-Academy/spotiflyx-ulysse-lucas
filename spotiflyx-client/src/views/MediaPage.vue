@@ -42,10 +42,11 @@ export default {
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ax } from '../router/router';
 
 const route = useRoute();
+const router = useRouter();
 const id = ref(route.params.id);
 const type = ref(route.params.type);
 
@@ -58,6 +59,7 @@ onMounted(async () => {
         media.value = data.data.data;
     } catch (error) {
         console.log(error);
+        router.push('/error');
     }
     console.log("media: ", media.value);
     if (type.value == 'music') {
