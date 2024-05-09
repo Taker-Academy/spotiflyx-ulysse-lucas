@@ -45,7 +45,8 @@
 }
 
 body {
-  min-height: 85vh;
+  min-height: min-content;
+  height: 85vh;
   color: var(--color-text);
   background: var(--color-background);
   transition:

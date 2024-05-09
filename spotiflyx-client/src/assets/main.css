@@ -20,4 +20,18 @@
 .video.iframShadow iframe {
     height: 60vh;
     width: calc(60vh * 16 / 9);
+    max-width: calc(100vw - 5rem);
+}
+
+.p-input-icon {
+    margin-left: 0.25rem;
+}
+
+.p-fieldset-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.p-password-input {
+    width: 100%;
 }

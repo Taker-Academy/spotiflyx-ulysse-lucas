@@ -136,8 +136,9 @@ const rmFavori = async () => {
 main {
     display: flex;
     flex-direction: column;
-    height: 95vh;
-    min-height: min-content;
+    height: min-content;
+    min-height: 90vh;
+    padding: 2.5rem 0;
     width: 100%;
     background-color: var(--color-background-soft);
 }

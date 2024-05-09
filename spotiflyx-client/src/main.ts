@@ -6,6 +6,8 @@ import App from './App.vue'
 import PrimeVue from 'primevue/config'
 import 'primevue/resources/themes/aura-dark-green/theme.css'
 import InputText from 'primevue/inputtext'
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
 import InpuGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
 import Password from 'primevue/password'
@@ -16,6 +18,9 @@ import SplitterPanel from 'primevue/splitterpanel';
 import Dialog from 'primevue/dialog';
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
+import Fieldset from 'primevue/fieldset';
+import ConfirmDialog from 'primevue/confirmdialog';
+import ConfirmationService from 'primevue/confirmationservice';
 import Tooltip from 'primevue/tooltip';
 
 import routers from './router/router'
@@ -25,7 +30,12 @@ const appli = createApp(App)
 appli.use(PrimeVue)
 appli.use(routers)
 appli.use(ToastService)
+appli.use(ConfirmationService)
 appli.directive('tooltip', Tooltip);
+appli.component('IconField', IconField)
+appli.component('ConfirmDialog', ConfirmDialog)
+appli.component('Fieldset', Fieldset)
+appli.component('InputIcon', InputIcon)
 appli.component('Dialog', Dialog)
 appli.component('Toast', Toast)
 appli.component('Splitter', Splitter)
