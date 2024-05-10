@@ -70,7 +70,7 @@ ax.get('/user').then((res) => {
 
 const confirmDelete = () => {
     confirm.require({
-        message: '⠀Est tu certain de vouloir supprimer ton compte ?',
+        message: ' Est tu certain de vouloir supprimer ton compte ?',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
         rejectClass: 'p-button-secondary p-button-outlined',
@@ -105,7 +105,7 @@ const savePwd = async () => {
     }).then((res) => {
         old.value = '';
         newpwd.value = '';
-        toast.add({severity:'success', summary: '⠀Mot de passe modifié', detail: 'Votre mot de passe a bien été modifié', life: 6000});
+        toast.add({severity:'success', summary: ' Mot de passe modifié', detail: 'Votre mot de passe a bien été modifié', life: 6000});
     }).catch((err) => {
         console.log(err);
         const errorMsg = document.querySelector('.errorMsg');

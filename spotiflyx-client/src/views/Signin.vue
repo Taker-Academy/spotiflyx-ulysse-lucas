@@ -31,6 +31,7 @@ import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ax } from '../router/router'
 import Button from 'primevue/button';
+import type { RouteLocationRaw } from 'vue-router';
 
 const route = useRoute();
 const redirect = route.query.redirect;
@@ -52,7 +53,7 @@ const signInFunc = async () => {
         console.log("Logged in", res.data)
         localStorage.setItem('connected', 'true');
         if (redirect && redirect != '/signin' && redirect != '/signup')
-            router.push(redirect);
+            router.push(redirect as RouteLocationRaw);
         else
             router.push('/home');
     }).catch((err: any) => {

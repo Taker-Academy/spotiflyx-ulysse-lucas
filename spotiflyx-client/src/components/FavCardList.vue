@@ -45,12 +45,13 @@ const cards = ref([]);
 onMounted(async () => {
     try {
         const data = await ax.get('/me/favorites');
-        for (let i = 0; i < data.data.data.length; i++) {
-            if (props.type == data.data.data[i].mediaType) {
-                cards.value.push(data.data.data[i]);
+        if (data.data.data != null) {
+            for (let i = 0; i < data.data.data.length; i++) {
+                if (props.type == data.data.data[i].mediaType) {
+                    cards.value.push(data.data.data[i]);
+                }
             }
         }
-        
     } catch (error) {
         console.log(error);
     }

@@ -30,6 +30,7 @@
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ax } from '../router/router'
+import type { RouteLocationRaw } from 'vue-router';
 
 const route = useRoute();
 const redirect = route.query.redirect;
@@ -52,7 +53,7 @@ const signUpFunc = () => {
         console.log("Signed up")
         localStorage.setItem('connected', 'true');
         if (redirect && redirect != '/signin' && redirect != '/signup')
-            router.push(redirect);
+            router.push(redirect as RouteLocationRaw);
         else
             router.push('/home');
     }).catch((err: any) => {

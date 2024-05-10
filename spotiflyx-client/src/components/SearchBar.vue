@@ -3,7 +3,12 @@
         <div class="searchBar">
             <div class="groupe">
                 <inputText class="bar" v-model="title" @input="search" placeholder="Rechercher un média"/>
-                <div class="result" v-if="mediaLs.length > 0">
+                <div v-if="mediaLs.length == 0 && title.length >= 2" class="result">
+                    <div class="media">
+                        <h2>Aucun résulats</h2>
+                    </div>
+                </div>
+                <div class="result" v-else-if="mediaLs.length > 0">
                     <RouterLink class="media" :to="'/media/' + media.mediaType + '/' + media.id" v-for="media in mediaLs" :key="media">
                         <h2>{{ media.title }}</h2><h3>{{ media.mediaType }}</h3>
                     </RouterLink>

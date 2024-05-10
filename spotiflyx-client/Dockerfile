@@ -1,5 +1,5 @@
 # Utiliser une image de base Node.js
-FROM node:14-alpine
+FROM node:20-alpine
 
 # Définir le répertoire de travail dans l'image Docker
 WORKDIR /app
@@ -10,10 +10,10 @@ COPY . .
 # Installer les dépendances
 RUN npm install
 
-RUN npm install --global serve
-
 # Compiler l'application Vue
 RUN npm run build-only
+
+RUN npm install --global serve
 
 COPY serve.json /app/dist/serve.json
 
